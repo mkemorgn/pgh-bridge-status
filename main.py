@@ -13,16 +13,30 @@ api = tweepy.API(auth)
 
 
 def main():
-    def publictweet():
-        tweettopublish = "Hello world 1"
-        api.update_status(tweettopublish)
-        print(tweettopublish)
-
-    def percentage(part, whole):
-        percentage = 100 * float(part) / float(whole)
-        return percentage
-
-    publictweet()
+    df = bridge.read_df()
+    poor_condition = bridge.poor_bridges(df)
+    percent_of_poor_bridges = bridge.poor_bridge_percent(df, poor_condition)
+    api.update_status(
+        "%.2f" % percent_of_poor_bridges
+        + "%"
+        + " of bridges in Allegeny County are 'poor'"
+    )
+    print(
+        "%.2f" % percent_of_poor_bridges
+        + "%"
+        + " of bridges in Allegeny County are 'poor'"
+    )
+    poor_bridges_by_municipality = bridge.most_poor_bridges_by_municipality(
+        poor_condition
+    )
+    api.update_status(
+        "These municipalities have the most bridges rated 'poor': "
+        + poor_bridges_by_municipality
+    )
+    print(
+        "These municipalities have the most bridges rated 'poor': "
+        + poor_bridges_by_municipality
+    )
 
 
 if __name__ == "__main__":

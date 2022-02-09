@@ -2,6 +2,7 @@ import tweepy
 import datetime
 import bridge
 import config
+import web
 
 consumer_key = config.consumer_key
 consumer_secret = config.consumer_secret
@@ -13,6 +14,7 @@ api = tweepy.API(auth)
 
 
 def main():
+    web.get_df()
     latest_file = bridge.get_latest_df()
     df = bridge.read_df(latest_file)
     poor_condition = bridge.poor_bridges(df)

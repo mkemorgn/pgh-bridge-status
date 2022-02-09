@@ -13,7 +13,8 @@ api = tweepy.API(auth)
 
 
 def main():
-    df = bridge.read_df()
+    latest_file = bridge.get_latest_df()
+    df = bridge.read_df(latest_file)
     poor_condition = bridge.poor_bridges(df)
     percent_of_poor_bridges = bridge.poor_bridge_percent(df, poor_condition)
     api.update_status(

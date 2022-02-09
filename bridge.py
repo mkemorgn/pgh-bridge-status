@@ -1,8 +1,19 @@
 import pandas as pd
+import glob
+import os
 
 
-def read_df():
-    df = pd.read_csv("bridge_data/BridgeConditionReport_County-02_2022-02-07.csv")
+def get_latest_df():
+    list_of_files = glob.glob(
+        "/home/mikem/Documents/code/bridge_bot/bridge_data/*.csv"
+    )  # * means all if need specific format then *.csv
+    latest_file = max(list_of_files, key=os.path.getctime)
+    print(latest_file)
+    return latest_file
+
+
+def read_df(latest_file):
+    df = pd.read_csv(latest_file)
     return df
 
 

@@ -13,29 +13,30 @@ def get_latest_df():
 
 
 def main():
-    latest_file_check = get_latest_df()
-    if latest_file_check[-14:-4] == datetime.date.today():
+    latest_file_check = str(get_latest_df())
+    current_date = str(datetime.date.today())
+    if latest_file_check[-14:-4] == current_date:
         print("Data up to date.")
     else:
-        get_latest_df()
+        web.get_df()
 
     latest_file = get_latest_df()
     df = bridge.read_df(latest_file)
     poor_condition = bridge.poor_bridges(df)
     percent_of_poor_bridges = bridge.poor_bridge_percent(df, poor_condition)
+    poor_bridges_by_municipality = bridge.most_poor_bridges_by_municipality(
+        poor_condition
+    )
+    poor_status_percentage = bridge.poor_open_no_restrictions(poor_condition)
     print(
         "%.0f" % percent_of_poor_bridges
         + "%"
         + " of bridges in Allegeny County are rated 'poor'"
     )
-    poor_bridges_by_municipality = bridge.most_poor_bridges_by_municipality(
-        poor_condition
-    )
     print(
         "These municipalities have the most bridges rated 'poor': "
         + poor_bridges_by_municipality
     )
-    poor_status_percentage = bridge.poor_open_no_restrictions(poor_condition)
     print(
         "%.0f" % poor_status_percentage
         + "%"
@@ -43,7 +44,7 @@ def main():
     )
     should_tweet = input("Would you like to tweet these stats?").lower()
     if should_tweet == "yes":
-        status = api.update_status(
+        api.update_status(
             percent_of_poor_bridges,
             poor_bridges_by_municipality,
             poor_status_percentage,

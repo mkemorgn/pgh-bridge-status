@@ -1,12 +1,8 @@
+"""
+Deals with manipulating the bridge data
+"""
+
 import pandas as pd
-import glob
-import os
-
-
-def get_latest_df():
-    list_of_files = glob.glob("/home/mikem/Documents/code/bridge_bot/bridge_data/*.csv")
-    latest_file = max(list_of_files, key=os.path.getctime)
-    return latest_file
 
 
 def read_df(latest_file):

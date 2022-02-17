@@ -41,11 +41,13 @@ def main():
         + "%"
         + " of bridges rated 'poor' are open with no restrictions"
     )
-    """
-    status = api.update_status(
-        percent_of_poor_bridges, poor_bridges_by_municipality, poor_status_percentage
-    )
-    """
+    should_tweet = input("Would you like to tweet these stats?").lower()
+    if should_tweet == "yes":
+        status = api.update_status(
+            percent_of_poor_bridges,
+            poor_bridges_by_municipality,
+            poor_status_percentage,
+        )
 
 
 if __name__ == "__main__":

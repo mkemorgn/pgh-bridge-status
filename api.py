@@ -1,3 +1,6 @@
+"""
+This file is responsible for doing all Twitter API related tasks
+"""
 import tweepy
 import config
 
